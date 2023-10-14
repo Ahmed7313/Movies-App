@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "914269149075",
+    "project_id": "movies-app-d9061",
+    "storage_bucket": "movies-app-d9061.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:914269149075:android:ddd3c73a8191de96eaba66",
+        "android_client_info": {
+          "package_name": "com.example.moviesapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6yE9ss64wRpZXL69tZ6tGb7Gj8-pL9hI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:914269149075:android:04c453ecd14be339eaba66",
+        "android_client_info": {
+          "package_name": "com.example.movplayv3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6yE9ss64wRpZXL69tZ6tGb7Gj8-pL9hI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

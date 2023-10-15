@@ -7,7 +7,7 @@ import com.example.moviesapp.data.remote.MovieApiService
 import com.example.moviesapp.data.repos.MovieDetailsRepository
 import com.example.moviesapp.data.repos.MoviesRepositoryImp
 import com.example.moviesapp.domain.repos.IMovieDetailsRepository
-import com.example.moviesapp.domain.repos.MoviesRepository
+import com.example.moviesapp.domain.repos.IMoviesRepository
 import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.Module
 import dagger.Provides
@@ -28,7 +28,7 @@ class MoviesRepositoryModule {
         moviesDao: PopularMoviesDao,
         configDao: AppConfigDao,
         firebaseAnalytics: FirebaseAnalytics
-    ): MoviesRepository {
+    ): IMoviesRepository {
         return MoviesRepositoryImp(moviesDao, service, configDao, firebaseAnalytics)
     }
 

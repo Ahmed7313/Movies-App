@@ -175,4 +175,11 @@ dependencies {
 
     //Palette
     implementation(libs.androidx.palette.palette.ktx)
+
+    //Testing
+    implementation(libs.kotlinx.coroutines.test)
+    implementation(libs.mockk)
+    implementation(libs.junit)
+    implementation(libs.com.squareup.moshi.moshi.adapters)
+
 }

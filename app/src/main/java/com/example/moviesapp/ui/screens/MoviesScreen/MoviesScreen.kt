@@ -1,5 +1,6 @@
 package com.example.moviesapp.ui.screens.MoviesScreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +18,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.example.moviesapp.ui.components.MovieShimmerEffectItem
 import com.example.moviesapp.ui.screens.destinations.MovieDetailsScreenDestination
+import com.example.moviesapp.ui.theme.PurpleGrey40
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -37,7 +39,8 @@ fun MovieListScreen(
 
 
     LazyColumn(
-        Modifier.fillMaxSize(),
+        Modifier.fillMaxSize()
+            .background(color = PurpleGrey40),
         contentPadding = PaddingValues(bottom = 16.dp)
     ) {
 

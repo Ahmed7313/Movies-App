@@ -18,34 +18,34 @@ class GetMovieDetailsUseCase @Inject constructor(
     private val movieDetailsRepository: IMovieDetailsRepository,
     private val configDao: AppConfigDao
 ) {
-
     fun execute(movieId: Int): Flow<Resource<MovieDetails>> = flow {
         val configEntity = configDao.getAppConfig()
         val language = configEntity?.language ?: "en-US"  // Default value if null
 
-        emit(Resource.Loading())
+        emit(Resource.Loading<MovieDetails>())
 
         try {
             val movieDetailsFlow = movieDetailsRepository.getMovieDetails(movieId, language)
             movieDetailsFlow.collect { resource ->
                 when (resource) {
-                    is Resource.Loading -> emit(Resource.Loading())
+                    is Resource.Loading -> emit(Resource.Loading<MovieDetails>())
                     is Resource.Success -> {
-                        val domainModel = resource.data?.toDomainModel()
+                        val domainModel = resource.data?.toDomainModel() // Assuming toDomainModel() maps from Entity to MovieDetails
                         if (domainModel != null) {
                             emit(Resource.Success(domainModel))
                         } else {
-                            emit(Resource.Error("Data is null"))
+                            emit(Resource.Error<MovieDetails>("Data is null"))
                         }
                     }
-                    is Resource.Error -> emit(Resource.Error(resource.message ?: "An error occurred"))
+                    is Resource.Error -> emit(Resource.Error<MovieDetails>(resource.message ?: "An error occurred"))
                 }
             }
         } catch (e: Exception) {
-            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
+            emit(Resource.Error<MovieDetails>(e.localizedMessage ?: "An unexpected error occurred"))
         }
     }
 }
+
 
 
 

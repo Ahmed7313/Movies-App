@@ -1,5 +1,7 @@
 package com.example.moviesapp.ui.screens.MovieDetailsScreen
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,12 +22,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.moviesapp.data.resource.Resource
 import com.example.moviesapp.ui.components.HeaderDetailsScreenContent
 import com.example.moviesapp.ui.theme.MediumPadding
+import com.example.moviesapp.ui.theme.PurpleGrey40
 import com.ramcosta.composedestinations.annotation.Destination
 
 /**
  * Created by Ahmed Rabee for AREEB task on 10/15/2023
  */
 
+@SuppressLint("SuspiciousIndentation")
 @Destination
 @Composable
 fun MovieDetailsScreen (
@@ -46,7 +50,7 @@ fun MovieDetailsScreen (
         }
         is Resource.Success -> {
             val movie = (movieDetails as Resource.Success).data
-            Column {
+            Column (modifier = Modifier.background(color = PurpleGrey40)){
                 HeaderDetailsScreenContent(modifier = Modifier) {
                     MovieDetailsHeaderContent(movie)
                 }

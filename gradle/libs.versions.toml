@@ -27,6 +27,10 @@ io-github-raamcosta-compose-destinations = "1.7.22-beta"
 org-jetbrains-kotlin = "1.7.10"
 org-jetbrains-kotlinx = "1.6.4"
 moshiKotlin = "1.15.0"
+kotlinx-coroutines-test = "1.5.2"
+mockk = "1.12.0"
+junit = "4.13.2"
+moshie-adapter = "1.12.0"
 
 [libraries]
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidx-activity" }
@@ -252,6 +256,10 @@ org-jetbrains-kotlinx-kotlinx-coroutines-android = { module = "org.jetbrains.kot
 org-jetbrains-kotlinx-kotlinx-coroutines-bom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version.ref = "org-jetbrains-kotlinx" }
 org-jetbrains-kotlinx-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "org-jetbrains-kotlinx" }
 org-jetbrains-kotlinx-kotlinx-coroutines-core-jvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm", version.ref = "org-jetbrains-kotlinx" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-test" }
+mockk = {module = "io.mockk:mockk",version.ref = "mockk"}
+#junit = {module = "junit:junit",version.ref = "junit"}
+com-squareup-moshi-moshi-adapters = {module = "com.squareup.moshi:moshi-adapters", version.ref = "moshie-adapter"}
 
 [plugins]
 com-android-application = "com.android.application:7.3.1"

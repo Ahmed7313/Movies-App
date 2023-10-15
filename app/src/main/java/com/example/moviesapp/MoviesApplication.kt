@@ -9,6 +9,7 @@ package com.example.moviesapp
 import android.app.Application
 import coil.ImageLoader
 import coil.ImageLoaderFactory
+import com.google.firebase.FirebaseApp
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 import javax.inject.Inject
@@ -23,6 +24,7 @@ class MoviesApplication : Application()  {
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
+            FirebaseApp.initializeApp(this)
         }
     }
 

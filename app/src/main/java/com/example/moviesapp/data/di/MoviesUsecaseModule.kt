@@ -1,7 +1,7 @@
 package com.softaai.mvvmdemo.di.moviesmodule
 
-import com.example.moviesapp.domain.repos.MovieRepository
-import com.softaai.mvvmdemo.domain.usecase.GetPopularMovies
+import com.example.moviesapp.domain.repos.MoviesRepository
+import com.softaai.mvvmdemo.domain.usecase.GetPopularMoviesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,6 +16,6 @@ class MoviesUsecaseModule {
 
     @Provides
     @Singleton
-    fun provideGetPopularMoviesUseCase(repository: MovieRepository): GetPopularMovies =
-        GetPopularMovies(repository)
+    fun provideGetPopularMoviesUseCase(repository: MoviesRepository): GetPopularMoviesUseCase =
+        GetPopularMoviesUseCase(repository)
 }

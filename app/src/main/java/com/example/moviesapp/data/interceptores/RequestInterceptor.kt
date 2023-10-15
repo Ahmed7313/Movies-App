@@ -19,6 +19,7 @@ class RequestInterceptor : Interceptor {
             .build()
         val request = originalRequest.newBuilder()
             .url(newUrl)
+            .addHeader("Authorization", BuildConfig.TMDB_TOKEN)
             .build()
         return chain.proceed(request)
     }

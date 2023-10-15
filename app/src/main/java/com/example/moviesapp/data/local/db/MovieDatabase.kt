@@ -1,47 +1,24 @@
-package com.softaai.mvvmdemo.data.source.local.roomdb
+package com.example.moviesapp.data.local.db
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.softaai.mvvmdemo.data.source.local.roomdb.converter.PopularMoviesEntityConverter
-import com.softaai.mvvmdemo.data.source.local.roomdb.dao.MovieDao
-import com.softaai.mvvmdemo.data.source.local.roomdb.dao.PopularMoviesDao
-import com.softaai.mvvmdemo.data.source.local.roomdb.entity.MovieEntity
-import com.softaai.mvvmdemo.data.source.local.roomdb.entity.PopularMoviesEntity
+import com.example.moviesapp.data.local.db.Config.AppConfigDao
+import com.example.moviesapp.data.local.db.Config.AppConfigEntity
+import com.example.moviesapp.data.local.db.MovieDetails.MovieDetailsDao
+import com.example.moviesapp.data.local.db.MovieDetails.MovieDetailsEntity
+import com.example.moviesapp.data.local.db.PopularMovies.PopularMovieEntity
+import com.example.moviesapp.data.local.db.PopularMovies.PopularMoviesDao
 
-
-
-@Database(
-    entities = [PopularMoviesEntity::class, MovieEntity::class],
-    version = 1,
-    exportSchema = false
-)
-@TypeConverters(PopularMoviesEntityConverter::class)
+/**
+ * Created by Ahmed Rabee for AREEB task on 10/14/2023
+ */
+@Database(entities = [PopularMovieEntity::class, AppConfigEntity::class, MovieDetailsEntity::class], version = 2, exportSchema = false)
+@TypeConverters(ListTypeConverter::class)
 abstract class MovieDatabase : RoomDatabase() {
-    abstract fun getMovieDao(): MovieDao
+    abstract fun popularMoviesDao(): PopularMoviesDao
 
-    abstract fun getPopularMoviesDao(): PopularMoviesDao
+    abstract fun appConfigDao(): AppConfigDao
 
-    companion object {
-        @Volatile
-        private var INSTANCE: MovieDatabase? = null
-
-        fun getDatabase(context: Context): MovieDatabase {
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
-            }
-            synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    MovieDatabase::class.java,
-                    "movie_database"
-                ).build()
-                INSTANCE = instance
-                return instance
-            }
-        }
-    }
+    abstract fun movieDetailsDao(): MovieDetailsDao
 }

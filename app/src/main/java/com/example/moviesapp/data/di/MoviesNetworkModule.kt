@@ -1,12 +1,16 @@
 package com.softaai.mvvmdemo.di.moviesmodule
 
+import android.content.Context
 import com.example.moviesapp.data.interceptores.RequestInterceptor
 import com.example.moviesapp.data.remote.MovieApiService
+import com.example.moviesapp.data.remote.dto.helper.ApiParams.BASE_URL
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -37,7 +41,7 @@ class MoviesNetworkModule {
     @Provides
     fun provideRetrofitService(okHttpClient: OkHttpClient): MovieApiService =
         Retrofit.Builder()
-            .baseUrl(MovieApiService.BASE_URL)
+            .baseUrl(BASE_URL)
             .addConverterFactory(
                 MoshiConverterFactory.create(
                     Moshi.Builder().add(KotlinJsonAdapterFactory()).build()

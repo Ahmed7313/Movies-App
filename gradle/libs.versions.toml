@@ -20,6 +20,7 @@ com-github-chuckerteam-chucker = "3.5.2"
 com-google-dagger = "2.44"
 com-squareup-okio = "3.2.0"
 com-squareup-retrofit2 = "2.9.0"
+gson = "2.10.1"
 io-coil-kt = "2.2.2"
 io-github-aakira = "1.4.1"
 io-github-raamcosta-compose-destinations = "1.7.22-beta"
@@ -221,6 +222,7 @@ com-squareup-okhttp3-okhttp-jvm = "com.squareup.okhttp3:okhttp-jvm:5.0.0-alpha.9
 com-squareup-okio = { module = "com.squareup.okio:okio", version.ref = "com-squareup-okio" }
 com-squareup-okio-okio-jvm = { module = "com.squareup.okio:okio-jvm", version.ref = "com-squareup-okio" }
 com-squareup-retrofit2-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "com-squareup-retrofit2" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 moshiKotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshiKotlin" }
 com-squareup-retrofit2-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "com-squareup-retrofit2" }
 dev-chrisbanes-snapper = "dev.chrisbanes.snapper:snapper:0.2.2"

@@ -1,64 +1,37 @@
 package com.example.moviesapp.ui.screens.MoviesScreen
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.moviesapp.data.resource.Resource
-import com.softaai.mvvmdemo.domain.model.Movie
-import com.softaai.mvvmdemo.domain.usecase.GetPopularMovies
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.example.moviesapp.data.local.db.Config.AppConfigEntity
+import com.example.moviesapp.domain.Model.Movie
+import com.example.moviesapp.domain.usecase.GetAppConfigUseCase
+import com.softaai.mvvmdemo.domain.usecase.GetPopularMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
 /**
  * Created by Ahmed Rabee for AREEB task on 10/14/2023
  */
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
-    private val getPopularMovies: GetPopularMovies
+    private val getPopularMovies: GetPopularMoviesUseCase,
+    private val getAppConfig: GetAppConfigUseCase
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(MovieUiState())
-    val state: State<MovieUiState> = _state
 
-    init {
-        getMovies()
-    }
+    // Fetching the AppConfig using the new UseCase
+    private val configFlow: Flow<AppConfigEntity?> = getAppConfig.execute()
 
-    fun getMovies() {
-        viewModelScope.launch {
-
-            getPopularMovies().onEach { result ->
-                when (result) {
-                    is Resource.Loading -> {
-                        _state.value = state.value.copy(
-                            moviesList = result.data ?: emptyList(),
-                            isLoading = true
-                        )
-                    }
-                    is Resource.Success -> {
-                        _state.value = state.value.copy(
-                            moviesList = result.data ?: emptyList(),
-                            isLoading = false
-                        )
-                    }
-                    is Resource.Error -> {
-                        _state.value = state.value.copy(
-                            moviesList = result.data ?: emptyList(),
-                            isLoading = false
-                        )
-
-                    }
-                }
-            }.launchIn(this)
-        }
-    }
+    // Using the fetched AppConfig to execute getPopularMovies
+    fun getMoviesFlow() : Flow<PagingData<Movie>> = configFlow.flatMapLatest { config ->
+        val language = config?.language ?: "en-US"  // Default value if null
+        val region = config?.region ?: "US"  // Default value if null
+        getPopularMovies.execute(language, region)
+    }.cachedIn(viewModelScope)
 }
-
-data class MovieUiState(
-    val moviesList: List<Movie> = emptyList(),
-    val isLoading: Boolean = false
-)

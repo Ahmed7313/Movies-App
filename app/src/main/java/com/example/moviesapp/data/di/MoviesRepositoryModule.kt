@@ -1,10 +1,14 @@
 package com.softaai.mvvmdemo.di.moviesmodule
 
+import com.example.moviesapp.data.local.db.Config.AppConfigDao
+import com.example.moviesapp.data.local.db.MovieDetails.MovieDetailsDao
+import com.example.moviesapp.data.local.db.PopularMovies.PopularMoviesDao
 import com.example.moviesapp.data.remote.MovieApiService
-import com.example.moviesapp.data.repos.MovieRepositoryImpl
-import com.example.moviesapp.domain.repos.MovieRepository
-import com.softaai.mvvmdemo.data.source.local.roomdb.dao.MovieDao
-import com.softaai.mvvmdemo.data.source.local.roomdb.dao.PopularMoviesDao
+import com.example.moviesapp.data.repos.MovieDetailsRepository
+import com.example.moviesapp.data.repos.MoviesRepositoryImp
+import com.example.moviesapp.domain.repos.IMovieDetailsRepository
+import com.example.moviesapp.domain.repos.MoviesRepository
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,9 +24,23 @@ class MoviesRepositoryModule {
     @Provides
     @Singleton
     fun provideMovieRepositoryImpl(
-        movieApiService: MovieApiService,
-        popularMoviesDao: PopularMoviesDao,
-        movieDao: MovieDao
-    ): MovieRepository = MovieRepositoryImpl(movieApiService, popularMoviesDao, movieDao)
+        service: MovieApiService,
+        moviesDao: PopularMoviesDao,
+        configDao: AppConfigDao,
+        firebaseAnalytics: FirebaseAnalytics
+    ): MoviesRepository {
+        return MoviesRepositoryImp(moviesDao, service, configDao, firebaseAnalytics)
+    }
 
+    @Provides
+    @Singleton
+    fun provideMovieDetailsRepository(
+        movieApiService: MovieApiService,
+        movieDetailsDao: MovieDetailsDao
+    ): IMovieDetailsRepository {
+        return MovieDetailsRepository(movieApiService, movieDetailsDao)
+    }
 }
+
+
+

@@ -16,6 +16,10 @@ fun getApiKey(): String {
     return project.properties["TMDB_API_KEY"]?.toString() ?: ""
 }
 
+fun getApiToken(): String {
+    return project.properties["TMDB_TOKEN"]?.toString() ?: ""
+}
+
 android {
     compileSdk = 33
 
@@ -27,6 +31,7 @@ android {
         versionName = "1.0"
 
         buildConfigField("String", "TMDB_API_KEY", getApiKey())
+        buildConfigField("String", "TMDB_TOKEN", getApiToken())
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -114,6 +119,9 @@ dependencies {
     implementation(libs.com.squareup.retrofit2.retrofit)
     implementation(libs.com.squareup.retrofit2.converter.moshi)
     implementation(libs.moshiKotlin)
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+    implementation(libs.gson)
 
     //OkHttp
     implementation(libs.com.squareup.okhttp3.okhttp)

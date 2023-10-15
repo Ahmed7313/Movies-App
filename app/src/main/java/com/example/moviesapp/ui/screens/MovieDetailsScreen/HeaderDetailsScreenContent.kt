@@ -1,6 +1,5 @@
-package com.example.moviesapp.ui.components
+package com.example.moviesapp.ui.screens.MovieDetailsScreen
 
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -10,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.ColorUtils
+import com.example.moviesapp.domain.Model.MovieDetails.MovieDetails
 
 /**
  * Created by Ahmed Rabee for AREEB task on 10/15/2023
@@ -18,7 +18,7 @@ import androidx.core.graphics.ColorUtils
 @Composable
 fun HeaderDetailsScreenContent(
     modifier: Modifier = Modifier,
-    content: @Composable (scrollState: ScrollState) -> Unit
+    movie : MovieDetails?,
 ) {
     val scrollState = rememberScrollState()
 
@@ -29,7 +29,7 @@ fun HeaderDetailsScreenContent(
                 .fillMaxWidth()
                 .verticalScroll(scrollState)
         ) {
-            content(scrollState)
+            MovieDetailsHeaderContent(movie)
         }
 
         // This Box is The AppBar on top of the content

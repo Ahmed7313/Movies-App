@@ -8,6 +8,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,6 +21,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -56,7 +58,9 @@ import com.example.moviesapp.ui.utils.ImageUtils
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MovieDetailsHeaderContent(movie: MovieDetails?) {
+fun MovieDetailsHeaderContent(movie: MovieDetails?,
+) {
+
     val infiniteTransition = rememberInfiniteTransition()
     val scale by infiniteTransition.animateFloat(
         initialValue = 1.0f,
@@ -67,156 +71,160 @@ fun MovieDetailsHeaderContent(movie: MovieDetails?) {
         )
     )
 
-    Box(
-        modifier = Modifier
-            .height(400.dp)
-            .fillMaxWidth()
-    ) {
-        // Background Image
-        if (movie != null) {
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.Center),
-                shape = RoundedCornerShape(bottomStart = MediumPadding, bottomEnd = MediumPadding),
-            ) {
-                Image(
-                    painter = rememberAsyncImagePainter(ImageUtils.getFullImageUrl(movie.backdropPath)),
-                    contentDescription = "Background Image",
-                    contentScale = ContentScale.Crop,
+        Box(
+            modifier = Modifier
+                .height(400.dp)
+                .fillMaxWidth()
+        ) {
+            // Background Image
+            if (movie != null) {
+                Surface(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .graphicsLayer(
-                            scaleX = scale,
-                            scaleY = scale
-                        )
-                        .alpha(0.5f)
-                        // Clip the Image as well
-                        .clip(
-                            RoundedCornerShape(
-                                bottomStart = MediumPadding,
-                                bottomEnd = MediumPadding
-                            )
-                        )
-                )
-            }
-
-            // Movie Item
-            Card(
-                modifier = Modifier
-                    .padding(MediumPadding)
-                    .align(Alignment.CenterStart)
-                    .clip(RoundedCornerShape(MediumPadding))
-            ) {
-                Image(
-                    painter = rememberAsyncImagePainter(ImageUtils.getFullImageUrl(movie.posterPath)),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier
-                        .height(ImageDefaultHeight)
-                        .width(ImageDefaultWidth)
-                )
-            }
-
-            Column (
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(ExtraLargePadding),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-
-            }
-
-            RatingProgress(
-                voteAverage = movie.voteAverage,
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(ExtraLargePadding),
-                radiuSize = 40,
-                fontSize = 20
-            )
-
-            // Rectangle Card
-            Surface(
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(MediumPadding)
-                    .fillMaxWidth(0.4f),
-                shape = RoundedCornerShape(MediumPadding),
-                color = Color.Gray.copy(alpha = 0.5f) // Set color here
-            ) {
-                Column(
-                    modifier = Modifier,
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .fillMaxWidth()
+                        .align(Alignment.Center),
+                    shape = RoundedCornerShape(bottomStart = MediumPadding, bottomEnd = MediumPadding),
                 ) {
-                    Text(
-                        text = "Status",
-                        style = TextStyle(
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp
-                        )
-                    )
-                    Text(
-                        text = movie.status ?: "Unknown",
-                        style = TextStyle(
-                            fontSize = 16.sp
-                        )
-                    )
-
-                    Spacer(modifier = Modifier.fillMaxWidth().height(SmallPadding).padding(MediumPadding).background(color = Color.White, shape = Shapes.small))
-
-                    movie?.genres?.take(3)?.forEach { genre ->
-                        Text(text = genre.name, style = TextStyle(fontSize = 14.sp))
-                    }
-
-                    Spacer(modifier = Modifier.fillMaxWidth().height(SmallPadding).padding(MediumPadding).background(color = Color.White, shape = Shapes.small))
-
-                    Text(
-                        text = "Budget: ",
-                        style = TextStyle(
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp
-                        )
-                    )
-                    Text(
-                        text = "${movie.budget}",
-                        style = TextStyle(
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp
-                        )
-                    )
-                    Spacer(modifier = Modifier.fillMaxWidth().height(SmallPadding).padding(MediumPadding).background(color = Color.White, shape = Shapes.small))
-
-                    Text(
-                        text = "Revenue: ",
-                        style = TextStyle(
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp
-                        )
-                    )
-                    Text(
-                        text = "${movie.revenue}",
-                        style = TextStyle(
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp
-                        )
+                    Image(
+                        painter = rememberAsyncImagePainter(ImageUtils.getFullImageUrl(movie.backdropPath)),
+                        contentDescription = "Background Image",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .graphicsLayer(
+                                scaleX = scale,
+                                scaleY = scale
+                            )
+                            .alpha(0.5f)
+                            // Clip the Image as well
+                            .clip(
+                                RoundedCornerShape(
+                                    bottomStart = MediumPadding,
+                                    bottomEnd = MediumPadding
+                                )
+                            )
                     )
                 }
-            }
+
+                // Movie Item
+                Card(
+                    modifier = Modifier
+                        .padding(MediumPadding)
+                        .align(Alignment.CenterStart)
+                        .clip(RoundedCornerShape(MediumPadding))
+                ) {
+                    Image(
+                        painter = rememberAsyncImagePainter(ImageUtils.getFullImageUrl(movie.posterPath)),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                            .height(ImageDefaultHeight)
+                            .width(ImageDefaultWidth)
+                    )
+                }
+
+                RatingProgress(
+                    voteAverage = movie.voteAverage,
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(ExtraLargePadding),
+                    radiuSize = 40,
+                    fontSize = 20
+                )
+
+                // Rectangle Card
+                Surface(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(MediumPadding)
+                        .fillMaxWidth(0.4f),
+                    shape = RoundedCornerShape(MediumPadding),
+                    color = Color.Gray.copy(alpha = 0.5f) // Set color here
+                ) {
+                    Column(
+                        modifier = Modifier,
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = "Status",
+                            style = TextStyle(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp
+                            )
+                        )
+                        Text(
+                            text = movie.status ?: "Unknown",
+                            style = TextStyle(
+                                fontSize = 16.sp
+                            )
+                        )
+
+                        Spacer(modifier = Modifier
+                            .fillMaxWidth()
+                            .height(SmallPadding)
+                            .padding(MediumPadding)
+                            .background(color = Color.White, shape = Shapes.small))
+
+                        movie?.genres?.take(3)?.forEach { genre ->
+                            Text(text = genre.name, style = TextStyle(fontSize = 14.sp))
+                        }
+
+                        Spacer(modifier = Modifier
+                            .fillMaxWidth()
+                            .height(SmallPadding)
+                            .padding(MediumPadding)
+                            .background(color = Color.White, shape = Shapes.small))
+
+                        Text(
+                            text = "Budget: ",
+                            style = TextStyle(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp
+                            )
+                        )
+                        Text(
+                            text = "${movie.budget}",
+                            style = TextStyle(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp
+                            )
+                        )
+                        Spacer(modifier = Modifier
+                            .fillMaxWidth()
+                            .height(SmallPadding)
+                            .padding(MediumPadding)
+                            .background(color = Color.White, shape = Shapes.small))
+
+                        Text(
+                            text = "Revenue: ",
+                            style = TextStyle(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp
+                            )
+                        )
+                        Text(
+                            text = "${movie.revenue}",
+                            style = TextStyle(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp
+                            )
+                        )
+                    }
+                }
 
 
-            // New TextView for the title of the movie and the date
-            Column(
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .padding(ExtraLargePadding)
-            ) {
-                Text(text = movie.title, style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 24.sp))
-                Text(text = movie.releaseDate, style = TextStyle(fontSize = 16.sp))
+                // New TextView for the title of the movie and the date
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(top = ExtraLargePadding, start = ExtraLargePadding)
+                ) {
+                    Spacer(modifier = Modifier.height(ExtraLargePadding))
+                    Text(text = movie.title, style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp))
+                    Text(text = movie.releaseDate, style = TextStyle(fontSize = 16.sp))
+                }
             }
         }
-    }
+
 }
 

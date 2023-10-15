@@ -14,19 +14,8 @@ class GetPopularMoviesUseCase(
     private val networkChecker: NetworkChecker
 
 ) {
-
     fun execute(language: String, region: String): Flow<PagingData<Movie>> {
-        return flow {
-            val moviesFromDb = moviesRepository.getMoviesFromDatabase()
-            if (moviesFromDb.isNotEmpty()) {
-                emit(moviesFromDb.toPagingData())
-            } else if (networkChecker.isNetworkAvailable()) {
-                emitAll(moviesRepository.getMoviesStream(language, region))
-            } else {
-                emit(emptyList<Movie>().toPagingData())
-            }
-        }
+        return moviesRepository.getMoviesStream(language, region)
     }
-
 }
 

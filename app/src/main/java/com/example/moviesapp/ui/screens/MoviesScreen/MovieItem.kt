@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -27,6 +28,7 @@ import com.example.moviesapp.ui.theme.ImageDefaultHeight
 import com.example.moviesapp.ui.theme.ImageDefaultWidth
 import com.example.moviesapp.ui.theme.MediumPadding
 import com.example.moviesapp.ui.utils.ImageUtils
+import com.example.moviesapp.ui.utils.shimmerBackground
 import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,6 +60,7 @@ fun MovieItem(
                 modifier = Modifier
                     .height(ImageDefaultHeight)
                     .width(ImageDefaultWidth)
+                    .shimmerBackground(shape = RectangleShape, active = true)
             )
 
             // Movie details

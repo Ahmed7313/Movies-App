@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface IMoviesRepository {
     suspend fun getConfig(): AppConfigEntity?
     suspend fun setConfig(language: String, region: String)
-    suspend fun getMoviesFromDatabase(): List<Movie>
+//    suspend fun getMoviesFromDatabase(): List<Movie>
     suspend fun fetchAndSaveMovies(page: Int, isoCode: String, region: String)
     fun getMoviesStream(language: String, region: String): Flow<PagingData<Movie>>
 }
